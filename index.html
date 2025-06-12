@@ -25,7 +25,7 @@
                 </div>
             </a>
             <!-- Navegación para usuarios no autenticados -->
-            <nav class="nav-buttons" id="auth-nav">
+            <nav class="nav-buttons" id="auth-nav" style="display: none;">
                 <button class="btn btn-secondary" onclick="mostrarFormularioLogin()">
                     <i class="fas fa-sign-in-alt"></i>
                     <span class="btn-text">Iniciar Sesión</span>
@@ -252,6 +252,13 @@
                 <button class="start-button" onclick="mostrarFormularioRegistro()">
                     Comienza tu viaje verde
                 </button>
+
+                <!-- Nueva sección ¿Quiénes Somos? -->
+                <div class="who-we-are-section">
+                    <h3 class="section-title">¿Quiénes Somos?</h3>
+                    <p>Econnect es una plataforma dedicada a fomentar la sostenibilidad ambiental y el compromiso ecológico en nuestra comunidad. Nuestra misión es empoderar a los estudiantes y la sociedad en general para que adopten hábitos más verdes a través de desafíos interactivos y recompensas significativas. Creemos firmemente que, al conectar la acción individual con el impacto colectivo, podemos construir un futuro más sostenible para todos.</p>
+                    <p>La aplicación Econnect es una herramienta innovadora diseñada para incentivar y recompensar las prácticas sostenibles. Aquí, los usuarios pueden participar en desafíos ecológicos, ganar puntos por sus acciones y canjearlos por recompensas académicas y otros beneficios. Nuestro objetivo es hacer que la sostenibilidad sea accesible, divertida y gratificante, inspirando a una nueva generación de líderes ambientales.</p>
+                </div>
             </div>
         </div>
 
@@ -265,6 +272,34 @@
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="matricula">Matrícula</label>
+                <input type="text" id="matricula" placeholder="Tu número de matrícula" required>
+            </div>
+            <div class="form-group">
+                <label for="materia">Materia</label>
+                <input type="text" id="materia" placeholder="Nombre de la materia" required>
+            </div>
+            <div class="form-group">
+                <label for="semestre">Semestre</label>
+                <select id="semestre" required>
+                    <option value="">Selecciona tu semestre</option>
+                    <option value="1">Primer Semestre</option>
+                    <option value="2">Segundo Semestre</option>
+                    <option value="3">Tercer Semestre</option>
+                    <option value="4">Cuarto Semestre</option>
+                    <option value="5">Quinto Semestre</option>
+                    <option value="6">Sexto Semestre</option>
+                    <option value="7">Séptimo Semestre</option>
+                    <option value="8">Octavo Semestre</option>
+                    <option value="9">Noveno Semestre</option>
+                    <option value="10">Décimo Semestre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="grupo">Grupo</label>
+                <input type="text" id="grupo" placeholder="Tu grupo (ej. A, B, C)" required>
             </div>
             <div class="form-group">
                 <label for="clave">Contraseña</label>
@@ -283,8 +318,8 @@
         <main id="login" class="auth-container">
             <h2 class="card-title">Iniciar Sesión</h2>
             <div class="form-group">
-                <label for="correoLogin">Correo Electrónico</label>
-                <input type="email" id="correoLogin" placeholder="tu@email.com" required>
+                <label for="identificador">Matrícula o Correo Electrónico</label>
+                <input type="text" id="identificador" placeholder="Ingresa tu matrícula o correo electrónico" required>
             </div>
             <div class="form-group">
                 <label for="claveLogin">Contraseña</label>
@@ -346,80 +381,98 @@
                     <div class="challenges-grid">
                         <div class="challenge-card" data-difficulty="facil">
                             <div class="challenge-header">
-                                <h3 class="challenge-title">Reciclar Plástico</h3>
-                                <span class="challenge-status">25/50 kg</span>
+                                <h3 class="challenge-title">Mes del Termo y Tupper</h3>
+                                <span class="challenge-status">28 Jun - 19 Jul</span>
+                            </div>
+                            <div class="challenge-badges">
+                                <span class="challenge-badge easy">Fácil</span>
+                                <span class="challenge-badge points">100 puntos</span>
+                            </div>
+                            <p style="margin-bottom: 1rem; color: #64748b;">Durante el mes de junio y julio, usa tu termo y tupper para reducir el uso de plásticos desechables.</p>
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('termo-tupper')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence1">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence1" onchange="subirEvidencia(1)">
+                                </div>
+                                <button class="btn btn-secondary complete-task-btn" id="completeTask1" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(1)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="challenge-card" data-difficulty="facil">
+                            <div class="challenge-header">
+                                <h3 class="challenge-title">Lleva tu Bolsa Ecológica</h3>
+                                <span class="challenge-status">0/1</span>
                             </div>
                             <div class="challenge-badges">
                                 <span class="challenge-badge easy">Fácil</span>
                                 <span class="challenge-badge points">50 puntos</span>
                             </div>
-                            <p style="margin-bottom: 1rem; color: #64748b;">Reúne una cantidad mínima de plástico reciclable.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence1">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence1" onchange="subirEvidencia(1)">
+                            <p style="margin-bottom: 1rem; color: #64748b;">Usa bolsas ecológicas en lugar de bolsas de plástico durante tus compras en el supermercado.</p>
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('bolsa-ecologica')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence2">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence2" onchange="subirEvidencia(2)">
+                                </div>
+                                <button class="btn btn-secondary complete-task-btn" id="completeTask2" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(2)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
                             </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask1" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(1)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
                         </div>
 
                         <div class="challenge-card" data-difficulty="medio">
                             <div class="challenge-header">
-                                <h3 class="challenge-title">Plantar un Árbol</h3>
+                                <h3 class="challenge-title">Trueque de Prendas</h3>
                                 <span class="challenge-status">0/1</span>
                             </div>
                             <div class="challenge-badges">
                                 <span class="challenge-badge medium">Medio</span>
-                                <span class="challenge-badge points">100 puntos</span>
+                                <span class="challenge-badge points">150 puntos</span>
                             </div>
-                            <p style="margin-bottom: 1rem; color: #64748b;">Planta un árbol en tu comunidad y sube la evidencia.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence2">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence2" onchange="subirEvidencia(2)">
+                            <p style="margin-bottom: 1rem; color: #64748b;">Participa en un intercambio de ropa para dar nueva vida a prendas que ya no uses.</p>
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('trueque-prendas')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence3">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence3" onchange="subirEvidencia(3)">
+                                </div>
+                                <button class="btn btn-secondary complete-task-btn" id="completeTask3" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(3)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
                             </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask2" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(2)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
                         </div>
 
                         <div class="challenge-card" data-difficulty="facil">
                             <div class="challenge-header">
-                                <h3 class="challenge-title">Uso de Transporte Sostenible</h3>
-                                <span class="challenge-status">3/7 días</span>
+                                <h3 class="challenge-title">Ahorra Agua</h3>
+                                <span class="challenge-status">0/1</span>
                             </div>
                             <div class="challenge-badges">
                                 <span class="challenge-badge easy">Fácil</span>
                                 <span class="challenge-badge points">75 puntos</span>
                             </div>
-                            <p style="margin-bottom: 1rem; color: #64748b;">Usa transporte público, bicicleta o camina durante una semana.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence3">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence3" onchange="subirEvidencia(3)">
-                            </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask3" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(3)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
-                        </div>
-
-                        <div class="challenge-card" data-difficulty="dificil">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">Jardín Comunitario</h3>
-                                <span class="challenge-status">0/1</span>
-                            </div>
-                            <div class="challenge-badges">
-                                <span class="challenge-badge hard">Difícil</span>
-                                <span class="challenge-badge points">200 puntos</span>
-                            </div>
-                            <p style="margin-bottom: 1rem; color: #64748b;">Crea o participa en un jardín comunitario en tu vecindario.</p>
+                            <p style="margin-bottom: 1rem; color: #64748b;">Coloca una botella llena de agua en la caja del inodoro para reducir el consumo de agua en cada descarga.</p>
                             <div class="file-upload">
                                 <label class="file-upload-label" for="evidence4">
                                     <i class="fas fa-cloud-upload-alt"></i>
@@ -434,14 +487,14 @@
 
                         <div class="challenge-card" data-difficulty="medio">
                             <div class="challenge-header">
-                                <h3 class="challenge-title">Reducción de Consumo de Agua</h3>
-                                <span class="challenge-status">15/30 días</span>
+                                <h3 class="challenge-title">Recolección de PET</h3>
+                                <span class="challenge-status">0/5 kg</span>
                             </div>
                             <div class="challenge-badges">
                                 <span class="challenge-badge medium">Medio</span>
-                                <span class="challenge-badge points">150 puntos</span>
+                                <span class="challenge-badge points">200 puntos</span>
                             </div>
-                            <p style="margin-bottom: 1rem; color: #64748b;">Reduce tu consumo de agua en un 20% durante un mes.</p>
+                            <p style="margin-bottom: 1rem; color: #64748b;">Recolecta 5 kilogramos de botellas PET para reciclaje.</p>
                             <div class="file-upload">
                                 <label class="file-upload-label" for="evidence5">
                                     <i class="fas fa-cloud-upload-alt"></i>
@@ -453,168 +506,399 @@
                                 <i class="fas fa-check-circle"></i> Marcar como Completado
                             </button>
                         </div>
+
+                        <div class="challenge-card" data-difficulty="facil">
+                            <div class="challenge-header">
+                                <h3 class="challenge-title">Recolección de Tapitas</h3>
+                                <span class="challenge-status">0/100</span>
+                            </div>
+                            <div class="challenge-badges">
+                                <span class="challenge-badge easy">Fácil</span>
+                                <span class="challenge-badge points">80 puntos</span>
+                            </div>
+                            <p style="margin-bottom: 1rem; color: #64748b;">Recolecta 100 tapitas de plástico para reciclaje.</p>
+                            <div class="file-upload">
+                                <label class="file-upload-label" for="evidence6">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    Subir Evidencia
+                                </label>
+                                <input type="file" id="evidence6" onchange="subirEvidencia(6)">
+                            </div>
+                            <button class="btn btn-primary complete-task-btn" id="completeTask6" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(6)">
+                                <i class="fas fa-check-circle"></i> Marcar como Completado
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Modal para visualizar PDF -->
+            <div id="pdfModal" class="modal" style="display: none;">
+                <div class="modal-content pdf-modal">
+                    <div class="modal-header">
+                        <h3 id="pdfTitle">Guía del Desafío</h3>
+                        <button class="close-button" onclick="cerrarPDF()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="marcarPDFLeido()">
+                            <i class="fas fa-check"></i>
+                            He leído la guía
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                /* Estilos para el modal de PDF */
+                .pdf-modal {
+                    max-width: 95%; /* Aumenta el ancho máximo */
+                    width: 95%;
+                    height: 95vh; /* Aumenta la altura del viewport */
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .modal-header {
+                    padding: 1rem;
+                    border-bottom: 1px solid #e2e8f0;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .modal-body {
+                    flex: 1;
+                    padding: 1rem;
+                    overflow: hidden;
+                }
+
+                .modal-footer {
+                    padding: 1rem;
+                    border-top: 1px solid #e2e8f0;
+                    text-align: right;
+                }
+
+                #pdfViewer {
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                .challenge-actions {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+
+                .challenge-card {
+                    background: white;
+                    border-radius: var(--border-radius);
+                    padding: 1.5rem;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.3s ease;
+                }
+
+                .challenge-card:hover {
+                    transform: translateY(-5px);
+                }
+            </style>
+
+            <script>
+                function mostrarPDF(desafioId) {
+                    const pdfModal = document.getElementById('pdfModal');
+                    const pdfViewer = document.getElementById('pdfViewer');
+                    const pdfTitle = document.getElementById('pdfTitle');
+                    
+                    // Configurar el título según el desafío
+                    switch(desafioId) {
+                        case 'termo-tupper':
+                            pdfTitle.textContent = 'Guía: Mes del Termo y Tupper';
+                            pdfViewer.src = 'pdfs/guia-termo-tupper.pdf';
+                            break;
+                        case 'bolsa-ecologica':
+                            pdfTitle.textContent = 'Guía: Bolsa Ecológica';
+                            pdfViewer.src = 'pdfs/guia-bolsa-ecologica.pdf';
+                            break;
+                        case 'trueque-prendas':
+                            pdfTitle.textContent = 'Guía: Trueque de Prendas';
+                            pdfViewer.src = 'pdfs/guia-trueque-prendas.pdf';
+                            break;
+                    }
+                    
+                    pdfModal.style.display = 'flex';
+                }
+
+                function cerrarPDF() {
+                    const pdfModal = document.getElementById('pdfModal');
+                    const pdfViewer = document.getElementById('pdfViewer');
+                    pdfViewer.src = '';
+                    pdfModal.style.display = 'none';
+                }
+
+                function marcarPDFLeido() {
+                    const usuarioActual = JSON.parse(localStorage.getItem('usuario_actual'));
+                    if (usuarioActual) {
+                        if (!usuarioActual.pdfsLeidos) {
+                            usuarioActual.pdfsLeidos = [];
+                        }
+                        const pdfActual = document.getElementById('pdfViewer').src.split('/').pop();
+                        if (!usuarioActual.pdfsLeidos.includes(pdfActual)) {
+                            usuarioActual.pdfsLeidos.push(pdfActual);
+                            localStorage.setItem('usuario_actual', JSON.stringify(usuarioActual));
+                        }
+                    }
+                    cerrarPDF();
+                }
+
+                function completarDesafio(desafioId) {
+                    const usuarioActual = JSON.parse(localStorage.getItem('usuario_actual'));
+                    if (usuarioActual) {
+                        const pdfActual = document.getElementById('pdfViewer').src.split('/').pop();
+                        if (!usuarioActual.pdfsLeidos || !usuarioActual.pdfsLeidos.includes(pdfActual)) {
+                            alert('Por favor, lee la guía antes de completar el desafío.');
+                            return;
+                        }
+                        
+                        // Lógica para completar el desafío
+                        if (!usuarioActual.desafiosCompletados) {
+                            usuarioActual.desafiosCompletados = [];
+                        }
+                        if (!usuarioActual.desafiosCompletados.includes(desafioId)) {
+                            usuarioActual.desafiosCompletados.push(desafioId);
+                            usuarioActual.puntos += 100; // Puntos por completar el desafío
+                            localStorage.setItem('usuario_actual', JSON.stringify(usuarioActual));
+                            alert('¡Desafío completado! Has ganado 100 puntos.');
+                        } else {
+                            alert('Ya has completado este desafío.');
+                        }
+                    }
+                }
+            </script>
+
             <div id="recompensas" class="dashboard-section">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Recompensas</h2>
-                        <span class="total-credits">Créditos disponibles: <span id="user-credits">350</span></span>
-                    </div>
-                    <div class="rewards-list">
-                        <div class="reward-item">
-                            <i class="fas fa-award reward-icon"></i>
-                            <div class="reward-info">
-                                <h4 class="reward-title">Insignia de Bronce</h4>
-                                <p class="reward-description">Completa 3 desafíos</p>
-                            </div>
-                        </div>
-                        <div class="reward-item">
-                            <i class="fas fa-medal reward-icon"></i>
-                            <div class="reward-info">
-                                <h4 class="reward-title">Insignia de Plata</h4>
-                                <p class="reward-description">Planta 10 árboles</p>
-                            </div>
-                        </div>
-                        <div class="reward-item">
-                            <i class="fas fa-crown reward-icon"></i>
-                            <div class="reward-info">
-                                <h4 class="reward-title">Insignia de Oro</h4>
-                                <p class="reward-description">Alcanza 1000 puntos</p>
-                            </div>
+                        <h2 class="card-title">Concurso de Excelencia Ambiental</h2>
+                        <div class="competition-status">
+                            <span class="status-badge">Fase Actual: <span id="current-phase">Recolección</span></span>
+                            <span class="total-credits">Puntos: <span id="user-credits">350</span></span>
                         </div>
                     </div>
 
-                    <!-- Sección de Cupones -->
-                    <div class="coupon-section">
-                        <div class="section-header">
-                            <h3 class="card-title">Cupones Disponibles</h3>
-                            <div class="coupon-filter">
-                                <select id="filter-coupon" onchange="filtrarCupones()">
-                                    <option value="todos">Todos los cupones</option>
-                                    <option value="menor">Precio: Menor a mayor</option>
-                                    <option value="mayor">Precio: Mayor a menor</option>
-                                    <option value="fecha">Fecha: Próximos a expirar</option>
-                                    <option value="tiendas">Por tienda</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="tiendas-filter" style="display: none; margin-bottom: 1rem;">
-                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('todas')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: var(--primary-color); color: white;">Todas</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('H&M')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #d50032; color: white;">H&M</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Zara')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #000000; color: white;">Zara</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Walmart')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #0071ce; color: white;">Walmart</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Adidas')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #000000; color: white;">Adidas</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Whole Foods')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #00674e; color: white;">Whole Foods</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Starbucks')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #00704a; color: white;">Starbucks</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('The Body Shop')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #004236; color: white;">The Body Shop</button>
-                                <button class="btn btn-sm" onclick="filtrarPorTienda('Patagonia')" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background-color: #5da698; color: white;">Patagonia</button>
-                            </div>
-                        </div>
-                        <div id="cupones-container">
-                            <!-- Los cupones se cargarán dinámicamente aquí -->
+                    <!-- Sección de Ranking -->
+                    <div class="ranking-section">
+                        <h3 class="section-title">Ranking de Participantes</h3>
+                        <div class="ranking-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Posición</th>
+                                        <th>Participante</th>
+                                        <th>Puntos</th>
+                                        <th>Nivel</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ranking-body">
+                                    <!-- Se llenará dinámicamente -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <!-- Nueva sección de Créditos Complementarios -->
-                    <div class="credit-section">
-                        <h3 class="card-title">Canjear Créditos Complementarios</h3>
-                        <p class="section-description">Tus créditos pueden ser canjeados por diferentes beneficios sostenibles.</p>
-
-                        <div class="credit-options">
-                            <div class="credit-card">
-                                <div class="credit-icon"><i class="fas fa-tree"></i></div>
-                                <div class="credit-info">
-                                    <h4>Donación para Reforestación</h4>
-                                    <p>Dona tus créditos para plantar árboles en zonas deforestadas.</p>
+                    <!-- Sección de Premios -->
+                    <div class="rewards-section">
+                        <h3 class="section-title">Canjear Puntos de Calificación</h3>
+                        <p class="section-description">Tus puntos pueden ser canjeados por puntos adicionales en tu calificación final.</p>
+                        
+                        <div class="rewards-grid">
+                            <!-- 1 Punto Extra -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-star" style="color: #FFC107;"></i>
                                 </div>
-                                <div class="credit-action">
-                                    <span class="credit-cost">100 créditos</span>
-                                    <button class="btn-credit" onclick="canjearCreditos('reforestacion', 100)">Canjear</button>
+                                <div class="reward-info">
+                                    <h4>1 Punto Extra</h4>
+                                    <p>Agrega 1 punto a tu calificación final</p>
+                                    <div class="reward-cost">800 puntos</div>
                                 </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('punto_1', 800)">
+                                    Canjear
+                                </button>
                             </div>
 
-                            <div class="credit-card">
-                                <div class="credit-icon"><i class="fas fa-solar-panel"></i></div>
-                                <div class="credit-info">
-                                    <h4>Apoyo a Energía Solar</h4>
-                                    <p>Contribuye a la instalación de paneles solares en escuelas rurales.</p>
+                            <!-- 2 Puntos Extra -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-star" style="color: #FFC107;"></i>
                                 </div>
-                                <div class="credit-action">
-                                    <span class="credit-cost">200 créditos</span>
-                                    <button class="btn-credit" onclick="canjearCreditos('solar', 200)">Canjear</button>
+                                <div class="reward-info">
+                                    <h4>2 Puntos Extra</h4>
+                                    <p>Agrega 2 puntos a tu calificación final</p>
+                                    <div class="reward-cost">1500 puntos</div>
                                 </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('punto_2', 1500)">
+                                    Canjear
+                                </button>
                             </div>
 
-                            <div class="credit-card">
-                                <div class="credit-icon"><i class="fas fa-tint"></i></div>
-                                <div class="credit-info">
-                                    <h4>Purificación de Agua</h4>
-                                    <p>Ayuda a proveer sistemas de agua potable en comunidades necesitadas.</p>
+                            <!-- 3 Puntos Extra -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-star" style="color: #FFC107;"></i>
                                 </div>
-                                <div class="credit-action">
-                                    <span class="credit-cost">150 créditos</span>
-                                    <button class="btn-credit" onclick="canjearCreditos('agua', 150)">Canjear</button>
+                                <div class="reward-info">
+                                    <h4>3 Puntos Extra</h4>
+                                    <p>Agrega 3 puntos a tu calificación final</p>
+                                    <div class="reward-cost">2000 puntos</div>
                                 </div>
-                            </div>
-
-                            <div class="credit-card">
-                                <div class="credit-icon"><i class="fas fa-graduation-cap"></i></div>
-                                <div class="credit-info">
-                                    <h4>Educación Ambiental</h4>
-                                    <p>Apoya programas educativos sobre sostenibilidad para niños.</p>
-                                </div>
-                                <div class="credit-action">
-                                    <span class="credit-cost">120 créditos</span>
-                                    <button class="btn-credit" onclick="canjearCreditos('educacion', 120)">Canjear</button>
-                                </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('punto_3', 2000)">
+                                    Canjear
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Sección de administración de cupones (solo visible para administradores) -->
-                    <div id="admin-cupones" class="admin-section" style="display: none;">
-                        <h3 class="card-title">Administrar Cupones</h3>
-                        <form id="formCupon" onsubmit="agregarCupon(event)">
-                            <div class="form-group">
-                                <label for="cuponTitulo">Título del Cupón</label>
-                                <input type="text" id="cuponTitulo" required placeholder="ej. 20% de descuento en...">
+                    <!-- Nueva Sección: Liberación de Horas de Servicio Social -->
+                    <div class="rewards-section">
+                        <h3 class="section-title">Liberación de Horas de Servicio Social</h3>
+                        <p class="section-description">Canjea tus puntos por horas de servicio social liberadas</p>
+                        
+                        <div class="rewards-grid">
+                            <!-- 10 Horas -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-clock" style="color: #22c55e;"></i>
+                                </div>
+                                <div class="reward-info">
+                                    <h4>10 Horas</h4>
+                                    <p>Liberación de 10 horas de servicio social</p>
+                                    <div class="reward-cost">500 puntos</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('horas_10', 500)">
+                                    Canjear
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="cuponCodigo">Código</label>
-                                <input type="text" id="cuponCodigo" required placeholder="ej. ECO2024">
+
+                            <!-- 20 Horas -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-clock" style="color: #22c55e;"></i>
+                                </div>
+                                <div class="reward-info">
+                                    <h4>20 Horas</h4>
+                                    <p>Liberación de 20 horas de servicio social</p>
+                                    <div class="reward-cost">900 puntos</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('horas_20', 900)">
+                                    Canjear
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="cuponPuntos">Puntos Requeridos</label>
-                                <input type="number" id="cuponPuntos" required min="0">
+
+                            <!-- 30 Horas -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-clock" style="color: #22c55e;"></i>
+                                </div>
+                                <div class="reward-info">
+                                    <h4>30 Horas</h4>
+                                    <p>Liberación de 30 horas de servicio social</p>
+                                    <div class="reward-cost">1300 puntos</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('horas_30', 1300)">
+                                    Canjear
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="cuponTienda">Tienda</label>
-                                <select id="cuponTienda" required>
-                                    <option value="">Seleccionar tienda</option>
-                                    <option value="H&M">H&M</option>
-                                    <option value="Zara">Zara</option>
-                                    <option value="Walmart">Walmart</option>
-                                    <option value="Adidas">Adidas</option>
-                                    <option value="Whole Foods">Whole Foods</option>
-                                    <option value="Starbucks">Starbucks</option>
-                                    <option value="The Body Shop">The Body Shop</option>
-                                    <option value="Patagonia">Patagonia</option>
-                                    <option value="Econnect">Econnect (Genérico)</option>
-                                </select>
+
+                            <!-- 40 Horas -->
+                            <div class="reward-card">
+                                <div class="reward-icon">
+                                    <i class="fas fa-clock" style="color: #22c55e;"></i>
+                                </div>
+                                <div class="reward-info">
+                                    <h4>40 Horas</h4>
+                                    <p>Liberación de 40 horas de servicio social</p>
+                                    <div class="reward-cost">1600 puntos</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="canjearRecompensa('horas_40', 1600)">
+                                    Canjear
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="cuponExpiracion">Fecha de Expiración</label>
-                                <input type="date" id="cuponExpiracion" required>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Logros Especiales -->
+                    <div class="achievements-section">
+                        <h3 class="section-title">Logros Especiales</h3>
+                        <div class="achievements-grid">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="achievement-info">
+                                    <h4>Líder Ambiental</h4>
+                                    <p>Dirige un proyecto comunitario exitoso</p>
+                                    <div class="achievement-reward">+200 puntos</div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                                Agregar Cupón
-                            </button>
-                        </form>
+
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="achievement-info">
+                                    <h4>Innovador Sostenible</h4>
+                                    <p>Propón una solución innovadora</p>
+                                    <div class="achievement-reward">+150 puntos</div>
+                                </div>
+                            </div>
+
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="achievement-info">
+                                    <h4>Agente de Cambio</h4>
+                                    <p>Involucra a 10+ personas en actividades</p>
+                                    <div class="achievement-reward">+100 puntos</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Progreso -->
+                    <div class="progress-section">
+                        <h3 class="section-title">Tu Progreso en el Concurso</h3>
+                        <div class="progress-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-points">350</div>
+                                <div class="stat-label">Puntos Totales</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="challenges-completed">5</div>
+                                <div class="stat-label">Desafíos Completados</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="current-rank">#12</div>
+                                <div class="stat-label">Posición Actual</div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <span>Bronce</span>
+                                <span>Plata</span>
+                                <span>Oro</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -630,196 +914,175 @@
                         <button class="video-filter active" onclick="filtrarVideos('todos')">Todos</button>
                         <button class="video-filter" onclick="filtrarVideos('reciclaje')">Reciclaje</button>
                         <button class="video-filter" onclick="filtrarVideos('agua')">Agua</button>
-                        <button class="video-filter" onclick="filtrarVideos('energia')">Energía</button>
-                        <button class="video-filter" onclick="filtrarVideos('biodiversidad')">Biodiversidad</button>
+                        <button class="video-filter" onclick="filtrarVideos('plastico')">Plástico</button>
+                        <button class="video-filter" onclick="filtrarVideos('consumo')">Consumo Responsable</button>
                     </div>
 
                     <div class="videos-grid">
-                        <!-- Video 1 -->
+                        <!-- Video 1: Reciclaje -->
                         <div class="video-card" data-category="reciclaje">
                             <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/FkOXW0UHxPw/maxresdefault.jpg" alt="Reciclaje Creativo">
-                                <div class="video-play-button" onclick="abrirVideo('FkOXW0UHxPw', 'Cómo reciclar correctamente en casa', 'Aprende a separar correctamente los desechos, identificar materiales reciclables y crear un sistema de reciclaje efectivo en tu hogar.')">
+                                <img src="https://img.youtube.com/vi/1pR68oLOLd8/maxresdefault.jpg" alt="Guía de Reciclaje">
+                                <div class="video-play-button" onclick="abrirVideo('1pR68oLOLd8', 'Guía Completa de Reciclaje', 'Aprende a reciclar correctamente los diferentes tipos de materiales y contribuye a un mundo más sostenible.')">
                                     <i class="fas fa-play"></i>
                                 </div>
                             </div>
                             <div class="video-info">
-                                <h3 class="video-title">Cómo reciclar correctamente en casa</h3>
-                                <p class="video-description">Aprende a separar correctamente los desechos, identificar materiales reciclables y crear un sistema de reciclaje efectivo en tu hogar.</p>
+                                <h3 class="video-title">Guía Completa de Reciclaje</h3>
+                                <p class="video-description">Aprende a reciclar correctamente los diferentes tipos de materiales y contribuye a un mundo más sostenible.</p>
                                 <div class="video-meta">
                                     <div class="video-duration">
                                         <i class="fas fa-clock"></i>
-                                        <span>7:45</span>
+                                        <span>8:45</span>
                                     </div>
                                     <span class="video-category reciclaje">Reciclaje</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Video 2 -->
+                        <!-- Video 2: Agua -->
                         <div class="video-card" data-category="agua">
                             <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/S1cAGQDIAQ4/maxresdefault.jpg" alt="Conservación del agua">
-                                <div class="video-play-button" onclick="abrirVideo('S1cAGQDIAQ4', 'Consejos para ahorrar agua en el hogar', 'Descubre técnicas simples pero efectivas para reducir el consumo de agua en tu vida diaria y contribuir a la conservación de este recurso vital.')">
+                                <img src="https://img.youtube.com/vi/3Xxr7afS8dU/maxresdefault.jpg" alt="Ahorro de Agua">
+                                <div class="video-play-button" onclick="abrirVideo('3Xxr7afS8dU', 'Cómo Ahorrar Agua en Casa', 'Consejos prácticos para reducir el consumo de agua en el hogar y contribuir a la conservación de este recurso vital.')">
                                     <i class="fas fa-play"></i>
                                 </div>
                             </div>
                             <div class="video-info">
-                                <h3 class="video-title">Consejos para ahorrar agua en el hogar</h3>
-                                <p class="video-description">Descubre técnicas simples pero efectivas para reducir el consumo de agua en tu vida diaria y contribuir a la conservación de este recurso vital.</p>
+                                <h3 class="video-title">Cómo Ahorrar Agua en Casa</h3>
+                                <p class="video-description">Consejos prácticos para reducir el consumo de agua en el hogar y contribuir a la conservación de este recurso vital.</p>
                                 <div class="video-meta">
                                     <div class="video-duration">
                                         <i class="fas fa-clock"></i>
-                                        <span>5:20</span>
+                                        <span>6:30</span>
                                     </div>
                                     <span class="video-category agua">Agua</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Video 3 -->
-                        <div class="video-card" data-category="energia">
+                        <!-- Video 3: Plástico -->
+                        <div class="video-card" data-category="plastico">
                             <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/X6HDcubgxRk/maxresdefault.jpg" alt="Energías renovables">
-                                <div class="video-play-button" onclick="abrirVideo('X6HDcubgxRk', 'Introducción a las energías renovables', 'Este video explica los diferentes tipos de energías renovables, cómo funcionan y por qué son fundamentales para combatir el cambio climático.')">
+                                <img src="https://img.youtube.com/vi/6R8xy0tNjKY/maxresdefault.jpg" alt="Alternativas al Plástico">
+                                <div class="video-play-button" onclick="abrirVideo('6R8xy0tNjKY', 'Alternativas al Plástico', 'Descubre opciones sostenibles para reducir el uso de plásticos en tu vida diaria.')">
                                     <i class="fas fa-play"></i>
                                 </div>
                             </div>
                             <div class="video-info">
-                                <h3 class="video-title">Introducción a las energías renovables</h3>
-                                <p class="video-description">Este video explica los diferentes tipos de energías renovables, cómo funcionan y por qué son fundamentales para combatir el cambio climático.</p>
+                                <h3 class="video-title">Alternativas al Plástico</h3>
+                                <p class="video-description">Descubre opciones sostenibles para reducir el uso de plásticos en tu vida diaria.</p>
+                                <div class="video-meta">
+                                    <div class="video-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>7:15</span>
+                                    </div>
+                                    <span class="video-category plastico">Plástico</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 4: Consumo Responsable -->
+                        <div class="video-card" data-category="consumo">
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/8xAAZ9Lt7uU/maxresdefault.jpg" alt="Consumo Responsable">
+                                <div class="video-play-button" onclick="abrirVideo('8xAAZ9Lt7uU', 'Guía de Consumo Responsable', 'Aprende a tomar decisiones de compra más sostenibles y reducir tu impacto ambiental.')">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3 class="video-title">Guía de Consumo Responsable</h3>
+                                <p class="video-description">Aprende a tomar decisiones de compra más sostenibles y reducir tu impacto ambiental.</p>
+                                <div class="video-meta">
+                                    <div class="video-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>9:20</span>
+                                    </div>
+                                    <span class="video-category consumo">Consumo Responsable</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 5: Reciclaje -->
+                        <div class="video-card" data-category="reciclaje">
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/7FUqFIDpj80/maxresdefault.jpg" alt="Reciclaje Creativo">
+                                <div class="video-play-button" onclick="abrirVideo('7FUqFIDpj80', 'Reciclaje Creativo en Casa', 'Ideas innovadoras para reutilizar materiales y darles una segunda vida.')">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3 class="video-title">Reciclaje Creativo en Casa</h3>
+                                <p class="video-description">Ideas innovadoras para reutilizar materiales y darles una segunda vida.</p>
+                                <div class="video-meta">
+                                    <div class="video-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>10:45</span>
+                                    </div>
+                                    <span class="video-category reciclaje">Reciclaje</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 6: Agua -->
+                        <div class="video-card" data-category="agua">
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/1kUE0BZtTRc/maxresdefault.jpg" alt="Crisis del Agua">
+                                <div class="video-play-button" onclick="abrirVideo('1kUE0BZtTRc', 'La Crisis Global del Agua', 'Entiende la importancia de la conservación del agua y su impacto en el planeta.')">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3 class="video-title">La Crisis Global del Agua</h3>
+                                <p class="video-description">Entiende la importancia de la conservación del agua y su impacto en el planeta.</p>
+                                <div class="video-meta">
+                                    <div class="video-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>11:30</span>
+                                    </div>
+                                    <span class="video-category agua">Agua</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 7: Plástico -->
+                        <div class="video-card" data-category="plastico">
+                            <div class="video-thumbnail">
+                                <img src="https://img.youtube.com/vi/6R8xy0tNjKY/maxresdefault.jpg" alt="Impacto del Plástico">
+                                <div class="video-play-button" onclick="abrirVideo('6R8xy0tNjKY', 'El Impacto del Plástico en el Océano', 'Conoce cómo el plástico afecta a los océanos y qué podemos hacer para reducir su impacto.')">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-info">
+                                <h3 class="video-title">El Impacto del Plástico en el Océano</h3>
+                                <p class="video-description">Conoce cómo el plástico afecta a los océanos y qué podemos hacer para reducir su impacto.</p>
                                 <div class="video-meta">
                                     <div class="video-duration">
                                         <i class="fas fa-clock"></i>
                                         <span>8:15</span>
                                     </div>
-                                    <span class="video-category energia">Energía</span>
+                                    <span class="video-category plastico">Plástico</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Video 4 -->
-                        <div class="video-card" data-category="reciclaje">
+                        <!-- Video 8: Consumo Responsable -->
+                        <div class="video-card" data-category="consumo">
                             <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/iBOxCDcMpGc/maxresdefault.jpg" alt="Upcycling">
-                                <div class="video-play-button" onclick="abrirVideo('iBOxCDcMpGc', 'Upcycling: transformando residuos en tesoros', 'Aprende a reutilizar materiales de desecho para crear objetos útiles y decorativos, reduciendo la basura y dando nueva vida a lo que ibas a tirar.')">
+                                <img src="https://img.youtube.com/vi/8xAAZ9Lt7uU/maxresdefault.jpg" alt="Moda Sostenible">
+                                <div class="video-play-button" onclick="abrirVideo('8xAAZ9Lt7uU', 'Moda Sostenible y Consumo Ético', 'Aprende sobre la importancia de la moda sostenible y cómo hacer compras más conscientes.')">
                                     <i class="fas fa-play"></i>
                                 </div>
                             </div>
                             <div class="video-info">
-                                <h3 class="video-title">Upcycling: transformando residuos en tesoros</h3>
-                                <p class="video-description">Aprende a reutilizar materiales de desecho para crear objetos útiles y decorativos, reduciendo la basura y dando nueva vida a lo que ibas a tirar.</p>
+                                <h3 class="video-title">Moda Sostenible y Consumo Ético</h3>
+                                <p class="video-description">Aprende sobre la importancia de la moda sostenible y cómo hacer compras más conscientes.</p>
                                 <div class="video-meta">
                                     <div class="video-duration">
                                         <i class="fas fa-clock"></i>
-                                        <span>10:30</span>
+                                        <span>12:20</span>
                                     </div>
-                                    <span class="video-category reciclaje">Reciclaje</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video 5 -->
-                        <div class="video-card" data-category="biodiversidad">
-                            <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/q5ngTJz8-mU/maxresdefault.jpg" alt="Biodiversidad">
-                                <div class="video-play-button" onclick="abrirVideo('q5ngTJz8-mU', 'La importancia de la biodiversidad', 'Descubre por qué la biodiversidad es crucial para la salud del planeta y cómo podemos contribuir a su conservación desde nuestra vida cotidiana.')">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div class="video-info">
-                                <h3 class="video-title">La importancia de la biodiversidad</h3>
-                                <p class="video-description">Descubre por qué la biodiversidad es crucial para la salud del planeta y cómo podemos contribuir a su conservación desde nuestra vida cotidiana.</p>
-                                <div class="video-meta">
-                                    <div class="video-duration">
-                                        <i class="fas fa-clock"></i>
-                                        <span>6:45</span>
-                                    </div>
-                                    <span class="video-category biodiversidad">Biodiversidad</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video 6 -->
-                        <div class="video-card" data-category="agua">
-                            <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/GcXE5-4HvmU/maxresdefault.jpg" alt="Crisis hídrica">
-                                <div class="video-play-button" onclick="abrirVideo('GcXE5-4HvmU', 'La crisis hídrica global: causas y soluciones', 'Un análisis profundo sobre la escasez de agua en el planeta, sus causas y las posibles soluciones para enfrentar uno de los mayores desafíos ambientales.')">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div class="video-info">
-                                <h3 class="video-title">La crisis hídrica global: causas y soluciones</h3>
-                                <p class="video-description">Un análisis profundo sobre la escasez de agua en el planeta, sus causas y las posibles soluciones para enfrentar uno de los mayores desafíos ambientales.</p>
-                                <div class="video-meta">
-                                    <div class="video-duration">
-                                        <i class="fas fa-clock"></i>
-                                        <span>12:10</span>
-                                    </div>
-                                    <span class="video-category agua">Agua</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video 7 -->
-                        <div class="video-card" data-category="energia">
-                            <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/1kUE0BZtTRc/maxresdefault.jpg" alt="Ahorro energético">
-                                <div class="video-play-button" onclick="abrirVideo('1kUE0BZtTRc', 'Cómo reducir tu consumo energético diario', 'Estrategias prácticas para disminuir el consumo de energía en casa, ahorrar dinero y reducir tu huella de carbono con cambios simples en tus hábitos cotidianos.')">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div class="video-info">
-                                <h3 class="video-title">Cómo reducir tu consumo energético diario</h3>
-                                <p class="video-description">Estrategias prácticas para disminuir el consumo de energía en casa, ahorrar dinero y reducir tu huella de carbono con cambios simples en tus hábitos cotidianos.</p>
-                                <div class="video-meta">
-                                    <div class="video-duration">
-                                        <i class="fas fa-clock"></i>
-                                        <span>9:25</span>
-                                    </div>
-                                    <span class="video-category energia">Energía</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video 8 -->
-                        <div class="video-card" data-category="reciclaje">
-                            <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/fwrlr7tXYQM/maxresdefault.jpg" alt="Economía circular">
-                                <div class="video-play-button" onclick="abrirVideo('fwrlr7tXYQM', 'Economía circular: un nuevo modelo de producción y consumo', 'Conoce cómo la economía circular propone un sistema donde los residuos se convierten en recursos, minimizando el impacto ambiental y maximizando la eficiencia.')">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div class="video-info">
-                                <h3 class="video-title">Economía circular: un nuevo modelo de producción y consumo</h3>
-                                <p class="video-description">Conoce cómo la economía circular propone un sistema donde los residuos se convierten en recursos, minimizando el impacto ambiental y maximizando la eficiencia.</p>
-                                <div class="video-meta">
-                                    <div class="video-duration">
-                                        <i class="fas fa-clock"></i>
-                                        <span>11:40</span>
-                                    </div>
-                                    <span class="video-category reciclaje">Reciclaje</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video 9 -->
-                        <div class="video-card" data-category="biodiversidad">
-                            <div class="video-thumbnail">
-                                <img src="https://img.youtube.com/vi/X-iJxM5v6t0/maxresdefault.jpg" alt="Especies en peligro">
-                                <div class="video-play-button" onclick="abrirVideo('X-iJxM5v6t0', 'Especies en peligro de extinción: una cuenta regresiva', 'Un recorrido por las principales especies amenazadas del planeta, las causas de su disminución y las acciones de conservación más urgentes.')">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div class="video-info">
-                                <h3 class="video-title">Especies en peligro de extinción: una cuenta regresiva</h3>
-                                <p class="video-description">Un recorrido por las principales especies amenazadas del planeta, las causas de su disminución y las acciones de conservación más urgentes.</p>
-                                <div class="video-meta">
-                                    <div class="video-duration">
-                                        <i class="fas fa-clock"></i>
-                                        <span>14:15</span>
-                                    </div>
-                                    <span class="video-category biodiversidad">Biodiversidad</span>
+                                    <span class="video-category consumo">Consumo Responsable</span>
                                 </div>
                             </div>
                         </div>
