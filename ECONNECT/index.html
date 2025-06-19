@@ -271,7 +271,15 @@
             </div>
             <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+                <input type="text" id="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidoPaterno">Apellido Paterno</label>
+                <input type="text" id="apellidoPaterno" placeholder="Tu apellido paterno" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidoMaterno">Apellido Materno</label>
+                <input type="text" id="apellidoMaterno" placeholder="Tu apellido materno" required>
             </div>
             <div class="form-group">
                 <label for="matricula">Matrícula</label>
@@ -282,24 +290,37 @@
                 <input type="text" id="materia" placeholder="Nombre de la materia" required>
             </div>
             <div class="form-group">
-                <label for="semestre">Semestre</label>
-                <select id="semestre" required>
+                <label for="grado">Semestre</label>
+                <select id="grado" required>
                     <option value="">Selecciona tu semestre</option>
-                    <option value="1">Primer Semestre</option>
-                    <option value="2">Segundo Semestre</option>
-                    <option value="3">Tercer Semestre</option>
-                    <option value="4">Cuarto Semestre</option>
-                    <option value="5">Quinto Semestre</option>
-                    <option value="6">Sexto Semestre</option>
-                    <option value="7">Séptimo Semestre</option>
-                    <option value="8">Octavo Semestre</option>
-                    <option value="9">Noveno Semestre</option>
-                    <option value="10">Décimo Semestre</option>
+                    <option value="1A">Primer Semestre - Grupo A</option>
+                    <option value="1B">Primer Semestre - Grupo B</option>
+                    <option value="1C">Primer Semestre - Grupo C</option>
+                    <option value="2A">Segundo Semestre - Grupo A</option>
+                    <option value="2B">Segundo Semestre - Grupo B</option>
+                    <option value="2C">Segundo Semestre - Grupo C</option>
+                    <option value="3A">Tercer Semestre - Grupo A</option>
+                    <option value="3B">Tercer Semestre - Grupo B</option>
+                    <option value="3C">Tercer Semestre - Grupo C</option>
+                    <option value="4A">Cuarto Semestre - Grupo A</option>
+                    <option value="4B">Cuarto Semestre - Grupo B</option>
+                    <option value="4C">Cuarto Semestre - Grupo C</option>
+                    <option value="5A">Quinto Semestre - Grupo A</option>
+                    <option value="5B">Quinto Semestre - Grupo B</option>
+                    <option value="5C">Quinto Semestre - Grupo C</option>
+                    <option value="6A">Sexto Semestre - Grupo A</option>
+                    <option value="6B">Sexto Semestre - Grupo B</option>
+                    <option value="6C">Sexto Semestre - Grupo C</option>
+                    <option value="7A">Séptimo Semestre - Grupo A</option>
+                    <option value="7B">Séptimo Semestre - Grupo B</option>
+                    <option value="7C">Séptimo Semestre - Grupo C</option>
+                    <option value="8A">Octavo Semestre - Grupo A</option>
+                    <option value="8B">Octavo Semestre - Grupo B</option>
+                    <option value="8C">Octavo Semestre - Grupo C</option>
+                    <option value="9A">Noveno Semestre - Grupo A</option>
+                    <option value="9B">Noveno Semestre - Grupo B</option>
+                    <option value="9C">Noveno Semestre - Grupo C</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="grupo">Grupo</label>
-                <input type="text" id="grupo" placeholder="Tu grupo (ej. A, B, C)" required>
             </div>
             <div class="form-group">
                 <label for="clave">Contraseña</label>
@@ -332,6 +353,11 @@
             <p class="login-register-toggle" onclick="mostrarFormularioRegistro()">
                 ¿No tienes cuenta? <span style="color: var(--primary-color); cursor: pointer;">Regístrate</span>
             </p>
+            <p class="forgot-password" onclick="mostrarRecuperarContrasena()">
+                <span style="color: var(--primary-color); cursor: pointer; font-size: 0.9rem;">
+                    <i class="fas fa-key"></i> ¿Olvidaste tu contraseña?
+                </span>
+            </p>
         </main>
 
         <!-- Dashboard principal modificado -->
@@ -346,7 +372,7 @@
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 45%"></div>
                         </div>
-                        <p style="text-align: right; font-size: 0.875rem; color: #64748b;">45/100 puntos</p>
+                        <p style="text-align: right; font-size: 0.875rem; color: #64748b;">45/700 puntos</p>
                     </div>
                     <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
                         <div style="text-align: center">
@@ -473,16 +499,22 @@
                                 <span class="challenge-badge points">75 puntos</span>
                             </div>
                             <p style="margin-bottom: 1rem; color: #64748b;">Coloca una botella llena de agua en la caja del inodoro para reducir el consumo de agua en cada descarga.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence4">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence4" onchange="subirEvidencia(4)">
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('ahorro-agua')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence4">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence4" onchange="subirEvidencia(4)">
+                                </div>
+                                <button class="btn btn-secondary complete-task-btn" id="completeTask4" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(4)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
                             </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask4" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(4)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
                         </div>
 
                         <div class="challenge-card" data-difficulty="medio">
@@ -495,16 +527,22 @@
                                 <span class="challenge-badge points">200 puntos</span>
                             </div>
                             <p style="margin-bottom: 1rem; color: #64748b;">Recolecta 5 kilogramos de botellas PET para reciclaje.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence5">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence5" onchange="subirEvidencia(5)">
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('recoleccion-pet')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence5">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence5" onchange="subirEvidencia(5)">
+                                </div>
+                                <button class="btn btn-primary complete-task-btn" id="completeTask5" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(5)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
                             </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask5" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(5)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
                         </div>
 
                         <div class="challenge-card" data-difficulty="facil">
@@ -517,16 +555,22 @@
                                 <span class="challenge-badge points">80 puntos</span>
                             </div>
                             <p style="margin-bottom: 1rem; color: #64748b;">Recolecta 100 tapitas de plástico para reciclaje.</p>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="evidence6">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    Subir Evidencia
-                                </label>
-                                <input type="file" id="evidence6" onchange="subirEvidencia(6)">
+                            <div class="challenge-actions">
+                                <button class="btn btn-primary" onclick="mostrarPDF('recoleccion-tapitas')">
+                                    <i class="fas fa-book"></i>
+                                    Leer Guía
+                                </button>
+                                <div class="file-upload">
+                                    <label class="file-upload-label" for="evidence6">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        Subir Evidencia
+                                    </label>
+                                    <input type="file" id="evidence6" onchange="subirEvidencia(6)">
+                                </div>
+                                <button class="btn btn-primary complete-task-btn" id="completeTask6" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(6)">
+                                    <i class="fas fa-check-circle"></i> Marcar como Completado
+                                </button>
                             </div>
-                            <button class="btn btn-primary complete-task-btn" id="completeTask6" style="display: none; margin-top: 1rem; width: 100%;" onclick="completarDesafio(6)">
-                                <i class="fas fa-check-circle"></i> Marcar como Completado
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -542,7 +586,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
+                        <iframe id="pdfViewer" width="100%" height="100%" frameborder="0"></iframe>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" onclick="marcarPDFLeido()">
@@ -556,11 +600,15 @@
             <style>
                 /* Estilos para el modal de PDF */
                 .pdf-modal {
-                    max-width: 95%; /* Aumenta el ancho máximo */
+                    max-width: 95%;
                     width: 95%;
-                    height: 95vh; /* Aumenta la altura del viewport */
+                    height: 95vh;
                     display: flex;
                     flex-direction: column;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    position: relative;
                 }
 
                 .modal-header {
@@ -569,44 +617,151 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    background: #f8fafc;
+                    border-radius: 12px 12px 0 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    z-index: 2;
+                }
+
+                .modal-header h3 {
+                    margin: 0;
+                    color: #1e293b;
+                    font-size: 1.25rem;
+                }
+
+                .close-button {
+                    background: none;
+                    border: none;
+                    font-size: 1.25rem;
+                    color: #64748b;
+                    cursor: pointer;
+                    padding: 0.5rem;
+                    transition: color 0.2s;
+                }
+
+                .close-button:hover {
+                    color: #1e293b;
                 }
 
                 .modal-body {
                     flex: 1;
-                    padding: 1rem;
+                    padding: 0;
                     overflow: hidden;
-                }
-
-                .modal-footer {
-                    padding: 1rem;
-                    border-top: 1px solid #e2e8f0;
-                    text-align: right;
+                    background: #f8fafc;
+                    margin-top: 3.5rem; /* Espacio para el header */
+                    margin-bottom: 3.5rem; /* Espacio para el footer */
                 }
 
                 #pdfViewer {
                     width: 100%;
                     height: 100%;
                     border: none;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                }
-
-                .challenge-actions {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1rem;
-                }
-
-                .challenge-card {
                     background: white;
-                    border-radius: var(--border-radius);
-                    padding: 1.5rem;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    transition: transform 0.3s ease;
                 }
 
-                .challenge-card:hover {
-                    transform: translateY(-5px);
+                .modal-footer {
+                    padding: 1rem;
+                    border-top: 1px solid #e2e8f0;
+                    text-align: right;
+                    background: #f8fafc;
+                    border-radius: 0 0 12px 12px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    z-index: 2;
+                }
+
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
+
+                /* Estilos para el botón de confirmación */
+                .modal-footer .btn-primary {
+                    padding: 0.5rem 1rem;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    transition: all 0.2s;
+                }
+
+                .modal-footer .btn-primary:hover {
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                }
+
+                /* Estilos para dispositivos móviles */
+                @media (max-width: 768px) {
+                    .pdf-modal {
+                        max-width: 100%;
+                        width: 100%;
+                        height: 100vh;
+                        border-radius: 0;
+                    }
+
+                    .modal-header {
+                        padding: 0.75rem;
+                        border-radius: 0;
+                    }
+
+                    .modal-header h3 {
+                        font-size: 1rem;
+                    }
+
+                    .modal-body {
+                        margin-top: 3rem;
+                        margin-bottom: 3rem;
+                    }
+
+                    .modal-footer {
+                        padding: 0.75rem;
+                        border-radius: 0;
+                    }
+
+                    .modal-footer .btn-primary {
+                        width: 100%;
+                        justify-content: center;
+                        padding: 0.75rem;
+                    }
+                }
+
+                /* Estilos para pantallas grandes */
+                @media (min-width: 1200px) {
+                    .pdf-modal {
+                        max-width: 90%;
+                        width: 90%;
+                    }
+
+                    .modal-header {
+                        padding: 1.25rem;
+                    }
+
+                    .modal-header h3 {
+                        font-size: 1.5rem;
+                    }
+
+                    .modal-body {
+                        margin-top: 4rem;
+                        margin-bottom: 4rem;
+                    }
+
+                    .modal-footer {
+                        padding: 1.25rem;
+                    }
                 }
             </style>
 
@@ -620,15 +775,27 @@
                     switch(desafioId) {
                         case 'termo-tupper':
                             pdfTitle.textContent = 'Guía: Mes del Termo y Tupper';
-                            pdfViewer.src = 'pdfs/guia-termo-tupper.pdf';
+                            pdfViewer.src = 'pdfs/Mes del Termo y Topper .pdf';
                             break;
                         case 'bolsa-ecologica':
                             pdfTitle.textContent = 'Guía: Bolsa Ecológica';
-                            pdfViewer.src = 'pdfs/guia-bolsa-ecologica.pdf';
+                            pdfViewer.src = 'pdfs/Trae tu bolsa ecológica.pdf';
                             break;
                         case 'trueque-prendas':
                             pdfTitle.textContent = 'Guía: Trueque de Prendas';
-                            pdfViewer.src = 'pdfs/guia-trueque-prendas.pdf';
+                            pdfViewer.src = 'pdfs/Trueque de prendas.pdf';
+                            break;
+                        case 'ahorro-agua':
+                            pdfTitle.textContent = 'Guía: Ahorra Agua';
+                            pdfViewer.src = 'pdfs/Ahorra agua con una botella.pdf';
+                            break;
+                        case 'recoleccion-pet':
+                            pdfTitle.textContent = 'Guía: Recolección de PET';
+                            pdfViewer.src = 'pdfs/Recicla PET.pdf';
+                            break;
+                        case 'recoleccion-tapitas':
+                            pdfTitle.textContent = 'Guía: Recolección de Tapitas';
+                            pdfViewer.src = 'pdfs/Recicla tapitas.pdf';
                             break;
                     }
                     
@@ -1109,7 +1276,7 @@
     </div>
 
     <!-- Modal de Perfil -->
-    <div id="perfilModal" class="modal">
+    <div id="perfilModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Mi Perfil</h3>
@@ -1133,6 +1300,14 @@
                 <div class="form-group">
                     <label for="perfilNombre">Nombre</label>
                     <input type="text" id="perfilNombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="perfilApellidoPaterno">Apellido Paterno</label>
+                    <input type="text" id="perfilApellidoPaterno" required>
+                </div>
+                <div class="form-group">
+                    <label for="perfilApellidoMaterno">Apellido Materno</label>
+                    <input type="text" id="perfilApellidoMaterno" required>
                 </div>
                 <div class="form-group">
                     <label for="perfilEmail">Correo Electrónico</label>
@@ -1176,7 +1351,7 @@
     </div>
 
     <!-- Modal de Quiz -->
-    <div id="quizModal" class="modal">
+    <div id="quizModal" class="modal" style="display: none;">
         <div class="modal-content quiz-modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="quizTitulo">Quiz: Nombre del Desafío</h3>
@@ -1230,9 +1405,41 @@
         </div>
     </div>
 
-    </section   >
-
-
+    <!-- Modal de Recuperar Contraseña -->
+    <div id="recuperarContrasenaModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-key"></i> Recuperar Contraseña
+                </h3>
+                <button class="close-modal" onclick="cerrarModalRecuperarContrasena()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">
+                    Ingresa tu correo electrónico o matrícula para recibir instrucciones de recuperación de contraseña.
+                </p>
+                <form id="formRecuperarContrasena" onsubmit="recuperarContrasena(event)">
+                    <div class="form-group">
+                        <label for="identificadorRecuperar">Correo Electrónico o Matrícula</label>
+                        <input type="text" id="identificadorRecuperar" placeholder="Ingresa tu correo o matrícula" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nuevaContrasena">Nueva Contraseña</label>
+                        <input type="password" id="nuevaContrasena" placeholder="••••••••" required>
+                        <small class="form-text text-muted">La contraseña debe tener al menos 6 caracteres</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmarContrasena">Confirmar Nueva Contraseña</label>
+                        <input type="password" id="confirmarContrasena" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Cambiar Contraseña
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

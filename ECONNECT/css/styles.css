@@ -2416,4 +2416,114 @@ main {
     .who-we-are-section p {
         font-size: 1rem;
     }
+}
+
+/* Estilos para notificaciones */
+.notificacion {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    color: white;
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.notificacion.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notificacion.error {
+    background-color: #ef4444;
+}
+
+.notificacion.success {
+    background-color: #22c55e;
+}
+
+.notificacion.info {
+    background-color: #3b82f6;
+}
+
+/* Estilos para recuperar contraseña */
+.forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.forgot-password span {
+    transition: color 0.3s ease;
+}
+
+.forgot-password span:hover {
+    color: var(--secondary-color) !important;
+    text-decoration: underline;
+}
+
+.modal-description {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* Mejoras para el modal de recuperar contraseña */
+#recuperarContrasenaModal .modal-content {
+    max-width: 400px;
+    width: 90%;
+}
+
+#recuperarContrasenaModal .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+}
+
+#recuperarContrasenaModal .modal-title i {
+    font-size: 1.2rem;
+}
+
+/* Animación para el modal */
+.modal {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }    

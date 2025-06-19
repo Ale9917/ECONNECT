@@ -2,92 +2,42 @@ document.addEventListener("DOMContentLoaded", () => {
     // Inicializar cupones predeterminados si no existen
     inicializarCuponesPredeterminados();
     
-    // Verificar que los elementos de credencial existan y estén configurados correctamente
-    const credencialPreview = document.getElementById("credencialPreview");
-    const credencialUpload = document.getElementById("credencialUpload");
-    const removeCredencial = document.getElementById("removeCredencial");
-    
-    if (credencialPreview && credencialUpload && removeCredencial) {
-        console.log("Elementos de credencial encontrados y configurados correctamente");
-        
-        // Asegurarse de que el área de vista previa sea clickeable
-        credencialPreview.addEventListener("click", function() {
-            credencialUpload.click();
+    // Verificar si hay elementos de credenciales
+    const credencialElements = document.querySelectorAll('.credencial-element');
+    if (credencialElements.length > 0) {
+        credencialElements.forEach(element => {
+            element.style.display = 'none';
         });
-    } else {
-        console.error("Algunos elementos de credencial no se encontraron:", 
-            {credencialPreview, credencialUpload, removeCredencial});
     }
 
-    const usuarioActual = localStorage.getItem("usuario_actual");
-    const sesionActiva = localStorage.getItem("sesion_activa");
-    
-    if (usuarioActual && sesionActiva === "true") {
-        const usuario = JSON.parse(usuarioActual);
-        
-        // Actualizar fecha de último acceso
-        usuario.ultimoAcceso = new Date().toISOString();
-        localStorage.setItem("usuario_actual", JSON.stringify(usuario));
-        
-        // Actualizar también en la lista de usuarios
-        let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-        const index = usuarios.findIndex(u => u.email === usuario.email);
-        if (index !== -1) {
-            usuarios[index].ultimoAcceso = usuario.ultimoAcceso;
-            localStorage.setItem("usuarios", JSON.stringify(usuarios));
-        }
-        
+    // Verificar si hay una sesión activa
+    const sesionActiva = localStorage.getItem('sesion_activa') === 'true';
+    const usuarioActual = JSON.parse(localStorage.getItem('usuario_actual'));
+
+    if (sesionActiva && usuarioActual) {
+        // Ocultar secciones de autenticación
         document.querySelector('.intro-section').style.display = 'none';
-        document.getElementById("auth-nav").style.display = "none";
-        mostrarApp(usuario);
-    } else {
-        // Limpiar cualquier sesión pendiente
-        localStorage.removeItem("usuario_actual");
-        localStorage.removeItem("sesion_activa");
+        document.getElementById('auth-nav').style.display = 'none';
+        document.getElementById('registro').style.display = 'none';
+        document.getElementById('login').style.display = 'none';
+
+        // Mostrar la aplicación
+        mostrarApp(usuarioActual);
         
+        // Mostrar la sección de videos por defecto
+        mostrarSeccion('videos');
+    } else {
+        // Mostrar secciones de autenticación
         document.querySelector('.intro-section').style.display = 'block';
-        document.getElementById("auth-nav").style.display = "flex";
-        document.getElementById("registro").style.display = "none";
-        document.getElementById("login").style.display = "none";
-        document.getElementById("main-nav").style.display = "none";
-        document.getElementById("mobile-nav").style.display = "none";
-
-        // Mostrar mensaje de bienvenida para visitantes nuevos
-        if (!localStorage.getItem("bienvenida_mostrada")) {
-            setTimeout(() => {
-                mostrarBienvenida("visitante");
-            }, 1000);
-        }
-
-        // Aplicar estilos específicos para botones en modo móvil
-        if (window.innerWidth <= 768) {
-            const authNav = document.getElementById('auth-nav');
-            authNav.style.flexDirection = 'row';
-            authNav.style.justifyContent = 'flex-end';
-            authNav.style.flex = '0 0 auto';
-
-            // Aplicar estilos a los botones
-            const buttons = authNav.querySelectorAll('.btn');
-            buttons.forEach(btn => {
-                const text = btn.querySelector('.btn-text');
-                if (text) text.style.display = 'none';
-
-                btn.style.width = '40px';
-                btn.style.height = '40px';
-                btn.style.padding = '0';
-                btn.style.borderRadius = '50%';
-                btn.style.minWidth = '40px';
-            });
-        }
+        document.getElementById('auth-nav').style.display = 'flex';
+        document.getElementById('registro').style.display = 'none';
+        document.getElementById('login').style.display = 'none';
     }
 
-    // Iniciar el carrusel
+    // Configurar el carrusel
     actualizarCarrusel();
 
-    // Configurar intervalo para el carrusel
-    setInterval(() => moverCarrusel(1), 5000);
-
-    // Configurar animación de estadísticas
+    // Configurar la animación de estadísticas
     configurarAnimacionEstadisticas();
 });
 
@@ -317,21 +267,31 @@ function iniciarSesion() {
     // Mostrar mensaje de éxito
     mostrarMensaje("¡Bienvenido de nuevo!", "success");
 
+    // Ocultar secciones de autenticación
+    document.querySelector('.intro-section').style.display = 'none';
+    document.getElementById("auth-nav").style.display = "none";
+    document.getElementById("registro").style.display = "none";
+    document.getElementById("login").style.display = "none";
+
     // Mostrar la aplicación
     mostrarApp(usuario);
+
+    // Mostrar bienvenida
+    mostrarBienvenida('login', usuario.nombre);
 }
 
 function crearUsuario() {
     const email = document.getElementById("correo").value;
     const nombre = document.getElementById("nombre").value;
+    const apellidoPaterno = document.getElementById("apellidoPaterno").value;
+    const apellidoMaterno = document.getElementById("apellidoMaterno").value;
     const clave = document.getElementById("clave").value;
     const matricula = document.getElementById("matricula").value;
     const materia = document.getElementById("materia").value;
-    const semestre = document.getElementById("semestre").value;
-    const grupo = document.getElementById("grupo").value;
+    const grado = document.getElementById("grado").value;
 
     // Validar que todos los campos estén llenos
-    if (!email || !nombre || !clave || !matricula || !materia || !semestre || !grupo) {
+    if (!email || !nombre || !apellidoPaterno || !apellidoMaterno || !clave || !matricula || !materia || !grado) {
         mostrarMensaje("Por favor, completa todos los campos", "error");
         return;
     }
@@ -350,15 +310,18 @@ function crearUsuario() {
         return;
     }
 
-    // Crear nuevo usuario
+    // Crear nuevo usuario con nombre completo
+    const nombreCompleto = `${nombre} ${apellidoPaterno} ${apellidoMaterno}`;
     const nuevoUsuario = {
         email,
-        nombre,
+        nombre: nombreCompleto,
+        nombreIndividual: nombre,
+        apellidoPaterno,
+        apellidoMaterno,
         clave,
         matricula,
         materia,
-        semestre,
-        grupo,
+        grado,
         puntos: 0,
         nivel: 1,
         insignias: [],
@@ -380,6 +343,9 @@ function crearUsuario() {
 
     // Mostrar la aplicación
     mostrarApp(nuevoUsuario);
+
+    // Mostrar bienvenida cada vez que se registra
+    mostrarBienvenida('registro', nuevoUsuario.nombre);
 }
 
 function mostrarApp(usuario) {
@@ -407,7 +373,7 @@ function mostrarApp(usuario) {
 
 function actualizarBarraProgreso(usuario) {
     const puntosActuales = usuario.puntos || 0;
-    const puntosSiguienteNivel = 100; // Puntos necesarios para el siguiente nivel
+    const puntosSiguienteNivel = 700; // Puntos necesarios para el siguiente nivel
     const porcentaje = Math.min((puntosActuales / puntosSiguienteNivel) * 100, 100);
     
     // Actualizar la barra de progreso
@@ -668,7 +634,7 @@ function completarDesafio(desafioId) {
 
     // Verificar si sube de nivel
     const nivelActual = usuarioActual.nivel || 1;
-    const puntosSiguienteNivel = nivelActual * 100;
+    const puntosSiguienteNivel = nivelActual * 700;
     
     if (usuarioActual.puntos >= puntosSiguienteNivel) {
         usuarioActual.nivel = nivelActual + 1;
@@ -1014,7 +980,9 @@ function verPerfil() {
         document.getElementById("insignias-perfil").textContent = usuarioActual.insignias || 0;
         
         // Rellenar el formulario con los datos del usuario
-        document.getElementById("perfilNombre").value = usuarioActual.nombre;
+        document.getElementById("perfilNombre").value = usuarioActual.nombreIndividual || usuarioActual.nombre.split(' ')[0] || '';
+        document.getElementById("perfilApellidoPaterno").value = usuarioActual.apellidoPaterno || usuarioActual.nombre.split(' ')[1] || '';
+        document.getElementById("perfilApellidoMaterno").value = usuarioActual.apellidoMaterno || usuarioActual.nombre.split(' ')[2] || '';
         document.getElementById("perfilEmail").value = usuarioActual.email;
         document.getElementById("perfilClave").value = "";
         
@@ -1034,15 +1002,9 @@ function verPerfil() {
         document.getElementById("credencialPreview").onclick = function() {
             document.getElementById("credencialUpload").click();
         };
-        
+     
         // Mostrar el modal
         modal.style.display = "block";
-        
-        // Mensaje para confirmar que la sección de credencial está visible
-        console.log("Modal de perfil abierto con sección de credencial");
-    } else {
-        alert("Debe iniciar sesión para ver su perfil");
-        mostrarFormularioLogin();
     }
 }
 
@@ -1103,13 +1065,24 @@ function actualizarPerfil(event) {
     event.preventDefault();
     
     const usuarioActual = JSON.parse(localStorage.getItem("usuario_actual"));
-    const nuevoNombre = document.getElementById("perfilNombre").value;
+    const nombre = document.getElementById("perfilNombre").value;
+    const apellidoPaterno = document.getElementById("perfilApellidoPaterno").value;
+    const apellidoMaterno = document.getElementById("perfilApellidoMaterno").value;
     const nuevoEmail = document.getElementById("perfilEmail").value;
     const nuevaClave = document.getElementById("perfilClave").value;
     
+    // Validar campos requeridos
+    if (!nombre || !apellidoPaterno || !apellidoMaterno || !nuevoEmail) {
+        mostrarMensaje("Por favor, completa todos los campos obligatorios", "error");
+        return;
+    }
+    
     if (usuarioActual) {
         // Actualizar datos del usuario
-        usuarioActual.nombre = nuevoNombre;
+        usuarioActual.nombre = `${nombre} ${apellidoPaterno} ${apellidoMaterno}`;
+        usuarioActual.nombreIndividual = nombre;
+        usuarioActual.apellidoPaterno = apellidoPaterno;
+        usuarioActual.apellidoMaterno = apellidoMaterno;
         usuarioActual.email = nuevoEmail;
         
         // Actualizar contraseña solo si se proporciona una nueva
@@ -1775,9 +1748,9 @@ function mostrarBienvenida(tipo, nombre = "") {
             break;
             
         case "login":
-            titulo.textContent = `¡Hola de nuevo, ${nombre}!`;
-            texto.textContent = "Nos alegra verte de vuelta. Continúa con tus desafíos ambientales y sigue haciendo la diferencia en nuestro planeta.";
-            boton.textContent = "Continuar mi viaje";
+            titulo.textContent = `¡Bienvenido a Econnect!`;
+            texto.innerHTML = `Una plataforma educativa que transforma tus acciones en impacto.<br><br>Econnect está diseñada para motivar a estudiantes y comunidades a adoptar hábitos sostenibles mediante desafíos, quizzes y recompensas.<br><br>Nuestro objetivo es fomentar la conciencia ambiental y promover la acción colectiva, logrando un cambio positivo y medible en el entorno que compartimos.`;
+            boton.textContent = "Comenzar mi viaje verde";
             break;
             
         default: // visitante
@@ -2229,9 +2202,9 @@ function evaluarQuiz() {
         usuario.puntos += puntosExtra;
         
         // Actualizar nivel si es necesario
-        if (usuario.puntos >= 100) {
+        if (usuario.puntos >= 700) {
             usuario.nivel++;
-            usuario.puntos -= 100;
+            usuario.puntos -= 700;
             mostrarNotificacion(`¡Felicidades! Has subido al nivel ${usuario.nivel}.`);
         }
         
@@ -2256,3 +2229,88 @@ function evaluarQuiz() {
     document.getElementById("submitQuiz").style.display = "none";
     resultadosContainer.style.display = "block";
 }    
+
+// Funciones para recuperar contraseña
+function mostrarRecuperarContrasena() {
+    const modal = document.getElementById("recuperarContrasenaModal");
+    modal.style.display = "block";
+    
+    // Limpiar formulario
+    document.getElementById("formRecuperarContrasena").reset();
+}
+
+function cerrarModalRecuperarContrasena() {
+    const modal = document.getElementById("recuperarContrasenaModal");
+    modal.style.display = "none";
+}
+
+function recuperarContrasena(event) {
+    event.preventDefault();
+    
+    const identificador = document.getElementById("identificadorRecuperar").value;
+    const nuevaContrasena = document.getElementById("nuevaContrasena").value;
+    const confirmarContrasena = document.getElementById("confirmarContrasena").value;
+    
+    // Validar campos
+    if (!identificador || !nuevaContrasena || !confirmarContrasena) {
+        mostrarMensaje("Por favor, completa todos los campos", "error");
+        return;
+    }
+    
+    // Validar que las contraseñas coincidan
+    if (nuevaContrasena !== confirmarContrasena) {
+        mostrarMensaje("Las contraseñas no coinciden", "error");
+        return;
+    }
+    
+    // Validar longitud de contraseña
+    if (nuevaContrasena.length < 6) {
+        mostrarMensaje("La contraseña debe tener al menos 6 caracteres", "error");
+        return;
+    }
+    
+    // Buscar usuario por correo o matrícula
+    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    const usuario = usuarios.find(u => 
+        u.email === identificador || u.matricula === identificador
+    );
+    
+    if (!usuario) {
+        mostrarMensaje("No se encontró un usuario con ese correo o matrícula", "error");
+        return;
+    }
+    
+    // Actualizar contraseña
+    usuario.clave = nuevaContrasena;
+    
+    // Guardar cambios en localStorage
+    const index = usuarios.findIndex(u => u.email === usuario.email);
+    if (index !== -1) {
+        usuarios[index] = usuario;
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    }
+    
+    // Si el usuario está logueado, actualizar también su sesión actual
+    const usuarioActual = JSON.parse(localStorage.getItem("usuario_actual"));
+    if (usuarioActual && usuarioActual.email === usuario.email) {
+        usuarioActual.clave = nuevaContrasena;
+        localStorage.setItem("usuario_actual", JSON.stringify(usuarioActual));
+    }
+    
+    // Mostrar mensaje de éxito
+    mostrarMensaje("Contraseña actualizada exitosamente", "success");
+    
+    // Cerrar modal
+    cerrarModalRecuperarContrasena();
+    
+    // Limpiar formulario
+    document.getElementById("formRecuperarContrasena").reset();
+}
+
+// Cerrar modal de recuperar contraseña al hacer clic fuera de él
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById("recuperarContrasenaModal");
+    if (event.target === modal) {
+        cerrarModalRecuperarContrasena();
+    }
+});
